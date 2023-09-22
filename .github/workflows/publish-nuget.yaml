@@ -1,0 +1,56 @@
+name: publish
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+
+jobs:
+  build-and-publish-nuget:
+    name: build and publish nuget
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # get full History to make sure tags are included an thus git-describe works
+
+      - name: Get version number
+        id: version
+        uses: PaulHatch/semantic-version@v5.2.1
+        with:
+          version_format: "${major}.${minor}.${patch}-beta${increment}"
+
+      - uses: nuget/setup-nuget@v1
+        with:
+          nuget-api-key: ${{ secrets.GITHUB_TOKEN }}
+          nuget-version: "6.x"
+
+      - name: Setup .NET Core @ Latest
+        uses: actions/setup-dotnet@v3
+        with:
+          source-url: https://nuget.pkg.github.com/renewedvision/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}  
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Build
+        id: build
+        shell: powershell
+        run: |
+          msbuild src/RenewedVision.Wpf.Interop.DirectX.sln -restore -p:RestorePackagesConfig=true -p:Version="${{ steps.version.outputs.version }}" -p:AssemblyVersion="${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}.${{ steps.version.outputs.increment }}" -t:Rebuild -p:Configuration=Release
+
+      - name: Package
+        id: package
+        run: |
+          nuget pack ./RenewedVision.Wpf.Interop.DirectX.nuspec -Version ${{ steps.version.outputs.version }} -Properties NuGetBinaries=src\x64\release
+
+      - name: Publish Nuget to GitHub registry
+        shell: powershell
+        run: |
+          foreach($file in (Get-ChildItem . -Recurse -Include *.nupkg)) {
+            dotnet nuget push $file --skip-duplicate
+          }

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>RenewedVision.Wpf.Interop.DirectX</id>
+        <title>RenewedVision.Wpf.Interop.DirectX</title>
+        <version>$version$</version>
+        <authors>Microsoft, RenewedVision</authors>
+        <owners>Microsoft, NugetWPF, RenewedVision</owners>
+        <copyright>© Microsoft Corporation. All rights reserved</copyright>
+        <requireLicenseAcceptance>true</requireLicenseAcceptance>
+        <license type="expression">MIT</license>
+        <summary>RenewedVision.Wpf.Interop.DirectX provides a new implementation of D3DImage that enables you to seamlessly interop with DirectX 10 or 11 content in your WPF application.</summary>
+        <projectUrl>https://github.com/renewedvision/WPFDXInterop</projectUrl>
+        <tags>WPF DirectX D3DImage D3D11Image DirectX11 DirectX10</tags>
+        <readme>docs\README.md</readme>
+        <description>
+            RenewedVision.Wpf.Interop.DirectX.D3D11Image is a version of D3DImage that supports DirectX 11 or DirectX 10. For more information, check out the project here: https://github.com/renewedvision/WPFDXInterop
+        </description>   
+        <dependencies>
+            <group targetFramework=".NETFramework4.7.2" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="$NuGetBinaries$\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net472\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinaries$\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net472\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="README.md" target="docs\" />
+    </files>
+</package>
