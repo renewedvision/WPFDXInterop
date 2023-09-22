@@ -5,6 +5,7 @@ on:
       - master
     tags:
       - "*"
+    
 
 jobs:
   build-and-publish-nuget:
@@ -19,8 +20,23 @@ jobs:
       - name: Get version number
         id: version
         uses: PaulHatch/semantic-version@v5.2.1
-        with:
-          version_format: "${major}.${minor}.${patch}-beta${increment}"
+
+      - name: Generate semver version number
+        id: generate-version
+        shell: powershell
+        run: |
+          if("${{ steps.version.outputs.is_tagged }}" -eq "false")
+          {
+            $assembly_version = "${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}.${{ steps.version.outputs.increment }}"
+            $semver_version = "${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}-beta.${{ steps.version.outputs.increment }}"
+          }
+          else
+          {
+            $assembly_version = "${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}.${{ steps.version.outputs.increment }}"
+            $semver_version = "${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}"
+          }
+          echo ::set-output name=assembly-version::${assembly_version}
+          echo ::set-output name=semantic-version::${semver_version}
 
       - uses: nuget/setup-nuget@v1
         with:
@@ -41,12 +57,12 @@ jobs:
         id: build
         shell: powershell
         run: |
-          msbuild src/RenewedVision.Wpf.Interop.DirectX.sln -restore -p:RestorePackagesConfig=true -p:Version="${{ steps.version.outputs.version }}" -p:AssemblyVersion="${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}.${{ steps.version.outputs.increment }}" -t:Rebuild -p:Configuration=Release
+          msbuild src/RenewedVision.Wpf.Interop.DirectX.sln -restore -p:RestorePackagesConfig=true -p:Version="${{ steps.generate-version.outputs.semantic-version }}" -p:AssemblyVersion="${{ steps.generate-version.outputs.assembly-version }}" -t:Rebuild -p:Configuration=Release
 
       - name: Package
         id: package
         run: |
-          nuget pack ./RenewedVision.Wpf.Interop.DirectX.nuspec -Version ${{ steps.version.outputs.version }} -Properties NuGetBinaries=src\x64\release
+          nuget pack ./RenewedVision.Wpf.Interop.DirectX.nuspec -Version ${{ steps.generate-version.outputs.semantic-version }} -Properties NuGetBinaries=src\x64\release
 
       - name: Publish Nuget to GitHub registry
         shell: powershell
