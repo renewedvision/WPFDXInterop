@@ -27,16 +27,17 @@ jobs:
         run: |
           if("${{ steps.version.outputs.is_tagged }}" -eq "false")
           {
-            $assembly_version = "${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}.${{ steps.version.outputs.increment }}"
             $semver_version = "${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}-beta.${{ steps.version.outputs.increment }}"
           }
           else
           {
-            $assembly_version = "${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}.${{ steps.version.outputs.increment }}"
             $semver_version = "${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}"
           }
-          echo ::set-output name=assembly-version::${assembly_version}
-          echo ::set-output name=semantic-version::${semver_version}
+
+          $assembly_version = "${{ steps.version.outputs.major }}.${{ steps.version.outputs.minor }}.${{ steps.version.outputs.patch }}.${{ steps.version.outputs.increment }}"
+
+          echo assembly-version=${assembly_version} >> $env:GITHUB_OUTPUT
+          echo semantic-version=${semver_version} >> $env:GITHUB_OUTPUT
 
       - uses: nuget/setup-nuget@v1
         with:
