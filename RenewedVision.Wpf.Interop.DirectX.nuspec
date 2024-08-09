@@ -17,12 +17,15 @@
             RenewedVision.Wpf.Interop.DirectX.D3D11Image is a version of D3DImage that supports DirectX 11 or DirectX 10. For more information, check out the project here: https://github.com/renewedvision/WPFDXInterop
         </description>   
         <dependencies>
-            <group targetFramework=".NETFramework4.7.2" />
+            <group targetFramework="net472" />
+            <group targetFramework="net8" />
         </dependencies>
     </metadata>
     <files>
-        <file src="$NuGetBinaries$\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net472\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinaries$\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net472\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinaries$\net472\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net472\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinaries$\net472\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net472\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinaries$\net8\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net8\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinaries$\net8\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net8\RenewedVision.Wpf.Interop.DirectX.pdb" />
         <file src="README.md" target="docs\" />
     </files>
 </package>
