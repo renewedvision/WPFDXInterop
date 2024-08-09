@@ -18,14 +18,14 @@
         </description>   
         <dependencies>
             <group targetFramework="net472" />
-            <group targetFramework="net8" />
+            <group targetFramework="net8.0" />
         </dependencies>
     </metadata>
     <files>
         <file src="$NuGetBinaries$\net472\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net472\RenewedVision.Wpf.Interop.DirectX.dll" />
         <file src="$NuGetBinaries$\net472\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net472\RenewedVision.Wpf.Interop.DirectX.pdb" />
-        <file src="$NuGetBinaries$\net8\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net8\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinaries$\net8\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net8\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinaries$\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinaries$\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
         <file src="README.md" target="docs\" />
     </files>
 </package>
