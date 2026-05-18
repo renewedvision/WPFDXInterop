@@ -1,7 +1,7 @@
 <Solution>
   <Configurations>
+    <Platform Name="Win32" />
     <Platform Name="x64" />
-    <Platform Name="x86" />
   </Configurations>
   <Project Path="RenewedVision.Wpf.Interop.DirectX/RenewedVision.Wpf.Interop.DirectX.Net10.vcxproj" Id="97809171-f529-4f9d-94b6-ce1043e22a7f" />
   <Project Path="RenewedVision.Wpf.Interop.DirectX/RenewedVision.Wpf.Interop.DirectX.Net8.vcxproj" Id="bdcdc97f-57c4-440e-a6aa-f873e1b820f6" />
