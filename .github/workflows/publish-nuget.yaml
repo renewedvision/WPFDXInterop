@@ -5,21 +5,20 @@ on:
       - master
     tags:
       - "*"
-    
 
 jobs:
   build-and-publish-nuget:
     name: build and publish nuget
-    runs-on: windows-latest
+    runs-on: windows-2025-vs2026
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0 # get full History to make sure tags are included an thus git-describe works
 
       - name: Get version number
         id: version
-        uses: PaulHatch/semantic-version@v5.2.1
+        uses: PaulHatch/semantic-version@v6
 
       - name: Generate semver version number
         id: generate-version
@@ -39,26 +38,26 @@ jobs:
           echo assembly-version=${assembly_version} >> $env:GITHUB_OUTPUT
           echo semantic-version=${semver_version} >> $env:GITHUB_OUTPUT
 
-      - uses: nuget/setup-nuget@v1
+      - uses: nuget/setup-nuget@v4
         with:
           nuget-api-key: ${{ secrets.GITHUB_TOKEN }}
           nuget-version: "6.x"
 
       - name: Setup .NET Core @ Latest
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           source-url: https://nuget.pkg.github.com/renewedvision/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}  
 
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
+        uses: microsoft/setup-msbuild@v3
 
       - name: Build
         id: build
         shell: powershell
         run: |
-          msbuild src/RenewedVision.Wpf.Interop.DirectX.sln -restore -p:RestorePackagesConfig=true -p:Version="${{ steps.generate-version.outputs.semantic-version }}" -p:AssemblyVersion="${{ steps.generate-version.outputs.assembly-version }}" -t:Rebuild -p:Configuration=Release
+          msbuild src/RenewedVision.Wpf.Interop.DirectX.slnx -restore -p:RestorePackagesConfig=true -p:Version="${{ steps.generate-version.outputs.semantic-version }}" -p:AssemblyVersion="${{ steps.generate-version.outputs.assembly-version }}" -t:Rebuild -p:Configuration=Release
 
       - name: Package
         id: package
