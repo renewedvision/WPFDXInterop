@@ -40,14 +40,6 @@
         <file src="$NuGetBinariesX86$\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
         <file src="$NuGetBinariesX86$\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x86\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" />
         <file src="$NuGetBinariesX86$\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
-        <file src="$NuGetBinariesX64$\net472\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x64\lib\net472\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinariesX64$\net472\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x64\lib\net472\RenewedVision.Wpf.Interop.DirectX.pdb" />
-        <file src="$NuGetBinariesX64$\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x64\lib\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinariesX64$\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x64\lib\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
-        <file src="$NuGetBinariesX64$\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x64\lib\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinariesX64$\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x64\lib\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
-        <file src="$NuGetBinariesX64$\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x64\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinariesX64$\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x64\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
         <file src="README.md" target="docs\" />
     </files>
 </package>
