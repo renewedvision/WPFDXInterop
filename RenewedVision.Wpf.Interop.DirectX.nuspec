@@ -19,6 +19,8 @@
         <dependencies>
             <group targetFramework="net472" />
             <group targetFramework="net8.0" />
+            <group targetFramework="net9.0" />
+            <group targetFramework="net10.0" />
         </dependencies>
     </metadata>
     <files>
@@ -26,6 +28,10 @@
         <file src="$NuGetBinaries$\net472\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net472\RenewedVision.Wpf.Interop.DirectX.pdb" />
         <file src="$NuGetBinaries$\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" />
         <file src="$NuGetBinaries$\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinaries$\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinaries$\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinaries$\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinaries$\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
         <file src="README.md" target="docs\" />
     </files>
 </package>
