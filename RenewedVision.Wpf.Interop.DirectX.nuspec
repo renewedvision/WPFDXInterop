@@ -11,10 +11,10 @@
         <license type="expression">MIT</license>
         <summary>RenewedVision.Wpf.Interop.DirectX provides a new implementation of D3DImage that enables you to seamlessly interop with DirectX 10 or 11 content in your WPF application.</summary>
         <projectUrl>https://github.com/renewedvision/WPFDXInterop</projectUrl>
-        <tags>WPF DirectX D3DImage D3D11Image DirectX11 DirectX10</tags>
+        <tags>WPF DirectX D3DImage D3D11Image DirectX11 DirectX10 win-x86 win-x64</tags>
         <readme>docs\README.md</readme>
         <description>
-            RenewedVision.Wpf.Interop.DirectX.D3D11Image is a version of D3DImage that supports DirectX 11 or DirectX 10. For more information, check out the project here: https://github.com/renewedvision/WPFDXInterop
+            RenewedVision.Wpf.Interop.DirectX.D3D11Image is a version of D3DImage that supports DirectX 11 or DirectX 10 and includes win-x86 and win-x64 package assets. For more information, check out the project here: https://github.com/renewedvision/WPFDXInterop
         </description>   
         <dependencies>
             <group targetFramework="net472" />
@@ -40,6 +40,14 @@
         <file src="$NuGetBinariesWin32$\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
         <file src="$NuGetBinariesWin32$\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x86\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" />
         <file src="$NuGetBinariesWin32$\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinariesX64$\net472\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x64\lib\net472\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesX64$\net472\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x64\lib\net472\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinariesX64$\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x64\lib\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesX64$\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x64\lib\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinariesX64$\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x64\lib\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesX64$\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x64\lib\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinariesX64$\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x64\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesX64$\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x64\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
         <file src="README.md" target="docs\" />
     </files>
 </package>
