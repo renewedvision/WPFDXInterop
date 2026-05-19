@@ -32,14 +32,14 @@
         <file src="$NuGetBinariesX64$\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
         <file src="$NuGetBinariesX64$\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" />
         <file src="$NuGetBinariesX64$\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="lib\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
-        <file src="$NuGetBinariesX86$\net472\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x86\lib\net472\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinariesX86$\net472\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net472\RenewedVision.Wpf.Interop.DirectX.pdb" />
-        <file src="$NuGetBinariesX86$\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x86\lib\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinariesX86$\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
-        <file src="$NuGetBinariesX86$\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x86\lib\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinariesX86$\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
-        <file src="$NuGetBinariesX86$\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x86\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinariesX86$\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinariesWin32$\net472\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x86\lib\net472\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesWin32$\net472\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net472\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinariesWin32$\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x86\lib\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesWin32$\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net8.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinariesWin32$\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x86\lib\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesWin32$\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net9.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
+        <file src="$NuGetBinariesWin32$\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x86\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesWin32$\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" target="runtimes\win-x86\lib\net10.0\RenewedVision.Wpf.Interop.DirectX.pdb" />
         <file src="README.md" target="docs\" />
     </files>
 </package>

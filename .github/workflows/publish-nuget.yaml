@@ -63,7 +63,7 @@ jobs:
       - name: Package
         id: package
         run: |
-          nuget pack ./RenewedVision.Wpf.Interop.DirectX.nuspec -Version ${{ steps.generate-version.outputs.semantic-version }} -Properties "NuGetBinariesX86=src\Win32\Release;NuGetBinariesX64=src\x64\Release"
+          nuget pack ./RenewedVision.Wpf.Interop.DirectX.nuspec -Version ${{ steps.generate-version.outputs.semantic-version }} -Properties "NuGetBinariesWin32=src\Win32\Release;NuGetBinariesX64=src\x64\Release"
 
       - name: Publish Nuget to GitHub registry
         shell: powershell
