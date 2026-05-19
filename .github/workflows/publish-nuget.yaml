@@ -18,7 +18,7 @@ jobs:
 
       - name: Get version number
         id: version
-        uses: PaulHatch/semantic-version@v6
+        uses: PaulHatch/semantic-version@v6.0.2
 
       - name: Generate semver version number
         id: generate-version
