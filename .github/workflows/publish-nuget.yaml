@@ -58,7 +58,7 @@ jobs:
         shell: powershell
         run: |
           msbuild src/RenewedVision.Wpf.Interop.DirectX.slnx -restore -p:RestorePackagesConfig=true -p:Version="${{ steps.generate-version.outputs.semantic-version }}" -p:AssemblyVersion="${{ steps.generate-version.outputs.assembly-version }}" -t:Rebuild -p:Configuration=Release -p:Platform=Win32
-          msbuild src/RenewedVision.Wpf.Interop.DirectX.slnx -restore -p:RestorePackagesConfig=true -p:Version="${{ steps.generate-version.outputs.semantic-version }}" -p:AssemblyVersion="${{ steps.generate-version.outputs.assembly-version }}" -t:Rebuild -p:Configuration=Release -p:Platform=x64
+          msbuild src/RenewedVision.Wpf.Interop.DirectX.slnx -p:RestorePackagesConfig=true -p:Version="${{ steps.generate-version.outputs.semantic-version }}" -p:AssemblyVersion="${{ steps.generate-version.outputs.assembly-version }}" -t:Rebuild -p:Configuration=Release -p:Platform=x64
 
       - name: Package
         id: package
