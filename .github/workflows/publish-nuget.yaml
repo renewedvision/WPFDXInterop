@@ -46,11 +46,6 @@ jobs:
           nuget-api-key: ${{ secrets.GITHUB_TOKEN }}
           nuget-version: "6.x"
 
-      - name: Setup .NET Core @ Latest
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: "10.0"
-
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v3
 
