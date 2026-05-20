@@ -57,12 +57,13 @@ jobs:
         id: build
         shell: powershell
         run: |
-          msbuild src/RenewedVision.Wpf.Interop.DirectX.slnx -restore -p:RestorePackagesConfig=true -p:Version="${{ steps.generate-version.outputs.semantic-version }}" -p:AssemblyVersion="${{ steps.generate-version.outputs.assembly-version }}" -t:Rebuild -p:Configuration=Release
+          msbuild src/RenewedVision.Wpf.Interop.DirectX.slnx -restore -p:RestorePackagesConfig=true -p:Version="${{ steps.generate-version.outputs.semantic-version }}" -p:AssemblyVersion="${{ steps.generate-version.outputs.assembly-version }}" -t:Rebuild -p:Configuration=Release -p:Platform=Win32
+          msbuild src/RenewedVision.Wpf.Interop.DirectX.slnx -p:RestorePackagesConfig=true -p:Version="${{ steps.generate-version.outputs.semantic-version }}" -p:AssemblyVersion="${{ steps.generate-version.outputs.assembly-version }}" -t:Rebuild -p:Configuration=Release -p:Platform=x64
 
       - name: Package
         id: package
         run: |
-          nuget pack ./RenewedVision.Wpf.Interop.DirectX.nuspec -Version ${{ steps.generate-version.outputs.semantic-version }} -Properties NuGetBinaries=src\RenewedVision.Wpf.Interop.DirectX\x64\Release
+          nuget pack ./RenewedVision.Wpf.Interop.DirectX.nuspec -Version ${{ steps.generate-version.outputs.semantic-version }} -Properties "NuGetBinariesWin32=src\Win32\Release;NuGetBinariesX64=src\x64\Release"
 
       - name: Publish Nuget to GitHub registry
         shell: powershell
