@@ -22,27 +22,13 @@
             <group targetFramework="net9.0" />
             <group targetFramework="net10.0" />
         </dependencies>
-        <references>
-            <group targetFramework="net472">
-                <reference file="RenewedVision.Wpf.Interop.DirectX.dll" />
-            </group>
-            <group targetFramework="net8.0">
-                <reference file="RenewedVision.Wpf.Interop.DirectX.dll" />
-            </group>
-            <group targetFramework="net9.0">
-                <reference file="RenewedVision.Wpf.Interop.DirectX.dll" />
-            </group>
-            <group targetFramework="net10.0">
-                <reference file="RenewedVision.Wpf.Interop.DirectX.dll" />
-            </group>
-        </references>
     </metadata>
     <files>
         <!-- Reference assemblies -->
-        <file src="$NuGetBinariesWin32$\net472\RenewedVision.Wpf.Interop.DirectX.dll" target="ref\net472\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinariesWin32$\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" target="ref\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinariesWin32$\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" target="ref\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" />
-        <file src="$NuGetBinariesWin32$\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" target="ref\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesWin32$\net472\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net472\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesWin32$\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net8.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesWin32$\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net9.0\RenewedVision.Wpf.Interop.DirectX.dll" />
+        <file src="$NuGetBinariesWin32$\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" target="lib\net10.0\RenewedVision.Wpf.Interop.DirectX.dll" />
 
         <!-- Runtime assemblies -->
         <file src="$NuGetBinariesWin32$\net472\RenewedVision.Wpf.Interop.DirectX.dll" target="runtimes\win-x86\lib\net472\RenewedVision.Wpf.Interop.DirectX.dll" />
