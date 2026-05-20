@@ -10,6 +10,9 @@ jobs:
   build-and-publish-nuget:
     name: build and publish nuget
     runs-on: windows-2025-vs2026
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -67,7 +70,9 @@ jobs:
 
       - name: Publish Nuget to GitHub registry
         shell: powershell
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           foreach($file in (Get-ChildItem . -Recurse -Include *.nupkg)) {
-            dotnet nuget push $file --source "https://nuget.pkg.github.com/renewedvision/index.json" --api-key $env:GITHUB_TOKEN --skip-duplicate --timeout 900
+            dotnet nuget push $file --source "https://nuget.pkg.github.com/renewedvision/index.json" --skip-duplicate --timeout 900
           }
