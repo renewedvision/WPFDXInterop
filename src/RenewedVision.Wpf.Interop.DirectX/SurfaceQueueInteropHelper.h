@@ -38,6 +38,7 @@ namespace RenewedVision {
 				bool m_isD3DInitialized;
 				bool m_areSurfacesInitialized;
 				bool m_shouldSkipRender;
+				bool m_isBackBufferAttached;
 
 				// Could hypothetically add additional types
 				enum struct QueueRenderMode
@@ -57,6 +58,10 @@ namespace RenewedVision {
 				void CleanupD3D9();
 
 				void CleanupSurfaces();
+
+				void DetachBackBuffer();
+
+				void OnFrontBufferAvailableChanged(Object^ sender, DependencyPropertyChangedEventArgs args);
 
 				void CleanupD3D();
 
@@ -92,12 +97,23 @@ namespace RenewedVision {
 						{
 							if (nullptr != m_d3dImage)
 							{
-								m_d3dImage->SetBackBuffer(System::Windows::Interop::D3DResourceType::IDirect3DSurface9, (IntPtr)nullptr);
+								m_d3dImage->IsFrontBufferAvailableChanged -= m_frontBufferAvailableChanged;
+								DetachBackBuffer();
 							}
 
 							m_d3dImage = d3dImage;
+							m_shouldSkipRender = nullptr == m_d3dImage || !m_d3dImage->IsFrontBufferAvailable;
 
-							// TODO: Force a rerender...?
+							if (nullptr != m_d3dImage)
+							{
+								if (nullptr == m_frontBufferAvailableChanged)
+								{
+									m_frontBufferAvailableChanged = gcnew DependencyPropertyChangedEventHandler(
+										this, &SurfaceQueueInteropHelper::OnFrontBufferAvailableChanged);
+								}
+
+								m_d3dImage->IsFrontBufferAvailableChanged += m_frontBufferAvailableChanged;
+							}
 						}
 					}
 				}

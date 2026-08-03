@@ -1,6 +1,22 @@
 # **WPF DirectX Extensions**
 WPF DirectX Extensions allow you to easily host DirectX 10 and DirectX 11 content in WPF applications.
 
+Supported .NET versions
+-----------------------
+
+The NuGet package contains architecture-specific C++/CLI runtime assemblies for x86 and x64:
+
+| Package target | Supported applications |
+| --- | --- |
+| `net472` | .NET Framework 4.7.2 and later, including 4.8 and 4.8.1 |
+| `net8.0` | .NET 8 WPF |
+| `net9.0` | .NET 9 WPF |
+| `net10.0` | .NET 10 WPF |
+
+Modern .NET C++/CLI binaries are runtime-specific, so each currently supported .NET major version is built as a
+separate project. The `net472` assembly remains the lowest compatible .NET Framework target so newer Framework
+applications can consume the same binary.
+
 Getting Started
 -------------------
  **Where to get it**

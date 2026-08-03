@@ -1,5 +1,6 @@
 name: publish
 on:
+  pull_request:
   push:
     branches:
       - master
@@ -61,7 +62,14 @@ jobs:
         run: |
           nuget pack ./RenewedVision.Wpf.Interop.DirectX.nuspec -Version ${{ steps.generate-version.outputs.semantic-version }} -Properties "NuGetBinariesWin32=src\Win32\Release;NuGetBinariesX64=src\x64\Release"
 
+      - name: Validate package assets
+        shell: powershell
+        run: |
+          $package = Get-ChildItem . -Filter *.nupkg | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+          ./scripts/Test-NuGetPackage.ps1 -PackagePath $package.FullName
+
       - name: Publish Nuget to GitHub registry
+        if: github.event_name == 'push'
         shell: powershell
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

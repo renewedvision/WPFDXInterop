@@ -112,6 +112,7 @@ namespace RenewedVision {
 
 			void SurfaceQueueInteropHelper::CleanupSurfaces()
 			{
+				DetachBackBuffer();
 				m_areSurfacesInitialized = false;
 
 				ReleaseInterface(m_BAProducer);
@@ -121,6 +122,48 @@ namespace RenewedVision {
 
 				ReleaseInterface(m_ABQueue);
 				ReleaseInterface(m_BAQueue);
+			}
+
+			void SurfaceQueueInteropHelper::DetachBackBuffer()
+			{
+				if (nullptr == m_d3dImage || !m_isBackBufferAttached)
+				{
+					return;
+				}
+
+				try
+				{
+					m_d3dImage->Lock();
+					try
+					{
+					m_d3dImage->SetBackBuffer(
+						System::Windows::Interop::D3DResourceType::IDirect3DSurface9, IntPtr::Zero);
+					}
+					finally
+					{
+						m_d3dImage->Unlock();
+					}
+				}
+				catch (Exception^)
+				{
+					// A device can disappear between the availability notification and this call.
+				}
+				finally
+				{
+					m_isBackBufferAttached = false;
+				}
+			}
+
+			void SurfaceQueueInteropHelper::OnFrontBufferAvailableChanged(
+				Object^, DependencyPropertyChangedEventArgs args)
+			{
+				m_shouldSkipRender = !safe_cast<bool>(args.NewValue);
+
+				if (m_shouldSkipRender)
+				{
+					// Software fallback is disabled, so WPF releases its reference when the front buffer is lost.
+					m_isBackBufferAttached = false;
+				}
 			}
 
 			void SurfaceQueueInteropHelper::CleanupD3D()
@@ -245,9 +288,9 @@ namespace RenewedVision {
 
 				if (m_isD3DInitialized)
 				{
-					hr = m_pD3D9Device->CheckDeviceState(NULL);
+					hr = m_D3D10Device->GetDeviceRemovedReason();
 
-					if (D3D_OK != hr)
+					if (FAILED(hr))
 					{
 						CleanupD3D();
 					}
@@ -290,8 +333,6 @@ namespace RenewedVision {
 
 				IDirect3DSurface9* pSurface9 = NULL;
 
-				DXGI_SURFACE_DESC desc;
-
 				// D3D10 portion
 				int count = 0;
 				UINT size = sizeof(int);
@@ -305,18 +346,24 @@ namespace RenewedVision {
 					goto Cleanup;
 				}
 
-				m_d3dImage->Lock();
-				fNeedUnlock = true;
+				try
+				{
+					m_d3dImage->Lock();
+					fNeedUnlock = true;
+				}
+				catch (Exception^)
+				{
+					hr = E_FAIL;
+					goto Cleanup;
+				}
 
 				// Flush the AB queue
-				m_ABProducer->Flush(0 /* wait */, NULL);
+				IFC(m_ABProducer->Flush(0 /* wait */, NULL));
 
 				// Dequeue from AB queue
 				IFC(m_ABConsumer->Dequeue(surfaceIDDXGI, &pUnkDXGISurface, &count, &size, INFINITE));
 
 				IFC(pUnkDXGISurface->QueryInterface(surfaceIDDXGI, (void**)&pDXGISurface));
-
-				IFC(pDXGISurface->GetDesc(&desc));
 
 				if (renderMode == QueueRenderMode::RenderDXGI)
 				{
@@ -332,10 +379,14 @@ namespace RenewedVision {
 				}
 
 				// Produce the surface
-				m_BAProducer->Enqueue(pDXGISurface, NULL, NULL, SURFACE_QUEUE_FLAG_DO_NOT_WAIT);
+				hr = m_BAProducer->Enqueue(pDXGISurface, NULL, NULL, SURFACE_QUEUE_FLAG_DO_NOT_WAIT);
+				if (FAILED(hr) && DXGI_ERROR_WAS_STILL_DRAWING != hr)
+				{
+					goto Cleanup;
+				}
 
 				// Flush the BA queue
-				m_BAProducer->Flush(0 /* wait, *not* SURFACE_QUEUE_FLAG_DO_NOT_WAIT*/, NULL);
+				IFC(m_BAProducer->Flush(0 /* wait, *not* SURFACE_QUEUE_FLAG_DO_NOT_WAIT*/, NULL));
 
 				// Dequeue from BA queue
 				IFC(m_BAConsumer->Dequeue(surfaceID9, &pUnkTexture9, NULL, NULL, INFINITE));
@@ -344,24 +395,60 @@ namespace RenewedVision {
 				// Get the top level surface from the texture
 				IFC(pTexture9->GetSurfaceLevel(0, &pSurface9));
 
-				m_d3dImage->SetBackBuffer(System::Windows::Interop::D3DResourceType::IDirect3DSurface9,
-					(IntPtr)(void*)pSurface9,
-					true // enableSoftwareFallback
-						 // Supports fallback to software rendering for Remote Desktop, etc...
-						 // Was added in WPF 4.5
-				);
+				if (!m_isBackBufferAttached)
+				{
+					try
+					{
+						m_d3dImage->SetBackBuffer(System::Windows::Interop::D3DResourceType::IDirect3DSurface9,
+							(IntPtr)(void*)pSurface9,
+							false // Do not retain a removed-device surface or fall back to an expensive software copy.
+						);
+						m_isBackBufferAttached = true;
+					}
+					catch (Exception^)
+					{
+						hr = E_FAIL;
+						goto Cleanup;
+					}
+				}
 
 				// Produce Surface
-				m_ABProducer->Enqueue(pTexture9, &count, sizeof(int), SURFACE_QUEUE_FLAG_DO_NOT_WAIT);
+				hr = m_ABProducer->Enqueue(pTexture9, &count, sizeof(int), SURFACE_QUEUE_FLAG_DO_NOT_WAIT);
+				if (FAILED(hr) && DXGI_ERROR_WAS_STILL_DRAWING != hr)
+				{
+					goto Cleanup;
+				}
 
 				// Flush the AB queue - use "do not wait" here, we'll block at the top of the *next* call if we need to
-				m_ABProducer->Flush(SURFACE_QUEUE_FLAG_DO_NOT_WAIT, NULL);
+				hr = m_ABProducer->Flush(SURFACE_QUEUE_FLAG_DO_NOT_WAIT, NULL);
+				if (FAILED(hr) && DXGI_ERROR_WAS_STILL_DRAWING != hr)
+				{
+					goto Cleanup;
+				}
+				hr = S_OK;
 
 			Cleanup:
 				if (fNeedUnlock)
 				{
-					m_d3dImage->AddDirtyRect(Int32Rect(0, 0, m_d3dImage->PixelWidth, m_d3dImage->PixelHeight));
-					m_d3dImage->Unlock();
+					try
+					{
+						if (SUCCEEDED(hr) && m_isBackBufferAttached)
+						{
+							m_d3dImage->AddDirtyRect(Int32Rect(0, 0, m_d3dImage->PixelWidth, m_d3dImage->PixelHeight));
+						}
+					}
+					catch (Exception^)
+					{
+						hr = E_FAIL;
+					}
+					try
+					{
+						m_d3dImage->Unlock();
+					}
+					catch (Exception^)
+					{
+						hr = E_FAIL;
+					}
 				}
 
 				ReleaseInterface(pSurface9);
@@ -371,6 +458,12 @@ namespace RenewedVision {
 
 				ReleaseInterface(pDXGISurface);
 				ReleaseInterface(pUnkDXGISurface);
+
+				if (FAILED(hr))
+				{
+					// Queue and WPF failures can leave ownership indeterminate. Recreate the complete device graph on retry.
+					CleanupD3D();
+				}
 			}
 
 
@@ -381,8 +474,10 @@ namespace RenewedVision {
 				{
 					m_pixelWidth = pixelWidth;
 					m_pixelHeight = pixelHeight;
-					CleanupSurfaces();
-					QueueHelper(QueueRenderMode::RenderDXGI);
+					if (m_areSurfacesInitialized)
+					{
+						CleanupSurfaces();
+					}
 				}
 			}
 
@@ -393,7 +488,12 @@ namespace RenewedVision {
 
 			SurfaceQueueInteropHelper::!SurfaceQueueInteropHelper()
 			{
+				if (nullptr != m_d3dImage && nullptr != m_frontBufferAvailableChanged)
+				{
+					m_d3dImage->IsFrontBufferAvailableChanged -= m_frontBufferAvailableChanged;
+				}
 				CleanupD3D();
+				m_d3dImage = nullptr;
 			}
 
 			SurfaceQueueInteropHelper::~SurfaceQueueInteropHelper()
